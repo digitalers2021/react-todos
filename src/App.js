@@ -1,24 +1,62 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
 
 function App() {
+  const [todos, setTodos] = useState(["Estudiar react", "instalar nodejs", "crear proyecto"]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TodoCount todos={todos}/>
+      <TodoList todos={todos}/>
+      <AddTodo setTodos={setTodos}/>
     </div>
+  );
+}
+
+function TodoCount({todos}) {
+  return <div>Total Todos: {todos.length} </div>;
+}
+
+// Si no queremos usar funciones anonimas podemos
+// definir una funcion y utilizarla
+function lista(todo){
+  return (<li key={todo}>{todo}</li>)
+};
+
+function TodoList({todos}) {
+  console.log("cantidad de elementos: ", todos.length)
+
+  return (
+    <ul>
+      {todos.map(function(todo) { return (<li key={todo}>{todo}</li>)} )}
+    </ul>
+  );
+}
+
+function AddTodo({setTodos}) {
+
+  const [esValido, setEsValido] = useState(true)
+
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    const todo = event.target.elements.todo.value;
+    if (todo === ""){
+      console.log("ERROR no hay string")
+      setEsValido(false)
+    } else {
+      console.log(todo)
+      console.log(esValido)
+      setEsValido(true)
+      setTodos(prevTodos => [...prevTodos, todo]);
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="text" id="todo" />
+      <button type="submit">Add Todo</button>
+      { esValido ? <p></p> : <p>no es valido</p>}
+    </form>
   );
 }
 
