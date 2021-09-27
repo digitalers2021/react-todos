@@ -1,4 +1,5 @@
 import './App.css';
+import UserInput from './UserInput'
 import React, { useState } from 'react';
 
 function App() {
@@ -12,8 +13,13 @@ function App() {
   );
 }
 
+
+
+
 function TodoCount({todos}) {
-  return <div>Total Todos: {todos.length} </div>;
+  return <div>
+    Total Todos: {todos.length} 
+    </div>;
 }
 
 // Si no queremos usar funciones anonimas podemos
@@ -27,6 +33,7 @@ function TodoList({todos}) {
 
   return (
     <ul>
+      <UserInput></UserInput>
       {todos.map(function(todo) { return (<li key={todo}>{todo}</li>)} )}
     </ul>
   );
